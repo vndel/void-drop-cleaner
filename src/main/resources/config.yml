@@ -1,0 +1,58 @@
+# ───────────────────────────────────────────────────────────────
+#  VoidDropCleaner
+#
+#  Merge first, remove second. Merging cuts entity count without
+#  destroying anything, so removal only has to handle what is
+#  genuinely abandoned.
+#
+#  There is no broadcast countdown here by design: announcing
+#  "clearing items in 10s" trains players to panic-collect and
+#  does nothing for the ticks already being spent.
+# ───────────────────────────────────────────────────────────────
+
+merge:
+  enabled: true
+
+  # Radius within which identical stacks combine.
+  radius: 2.5
+
+  # Keep vanilla stack limits. Disable only if you accept stacks
+  # above 64, which some clients render incorrectly.
+  respect-max-stack: true
+
+sweep:
+  # 1200 ticks = 60s.
+  interval-ticks: 1200
+
+  # Items younger than this are never removed; this is the window a
+  # player has to come back for their drops.
+  minimum-age-ticks: 1200
+
+  # Removal only engages above this per-world ground-item count.
+  # Below it, merging has already handled the load.
+  entity-threshold: 300
+
+  # Skip the pass entirely when MSPT is already this high. A full
+  # entity scan during a spike would deepen the spike.
+  abort-above-mspt: 48.0
+
+  excluded-worlds:
+    - 'spawn'
+    - 'creative_plots'
+
+  log-passes: true
+
+protect:
+  # Named and enchanted drops are almost always player gear, not litter.
+  named-items: true
+  enchanted-items: true
+
+  # Never remove these materials regardless of age.
+  materials:
+    - 'NETHERITE_INGOT'
+    - 'NETHERITE_SCRAP'
+    - 'ANCIENT_DEBRIS'
+    - 'ELYTRA'
+    - 'TOTEM_OF_UNDYING'
+    - 'DRAGON_EGG'
+    - 'ENCHANTED_GOLDEN_APPLE'
