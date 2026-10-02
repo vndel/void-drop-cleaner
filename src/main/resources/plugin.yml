@@ -1,0 +1,18 @@
+name: VoidDropCleaner
+version: '${project.version}'
+main: com.fivemcodehub.voiddrop.VoidDropPlugin
+api-version: '1.20'
+authors: [vndel]
+description: Entity sweeper that merges ground items before removing them
+website: https://team.fivemcodehub.com
+
+commands:
+  voiddrop:
+    description: Sweeper diagnostics
+    usage: /voiddrop <status|sweep|reload>
+    permission: voiddrop.admin
+
+permissions:
+  voiddrop.admin:
+    description: Administrative access
+    default: op
